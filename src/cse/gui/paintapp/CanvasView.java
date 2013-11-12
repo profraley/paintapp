@@ -17,7 +17,8 @@ public class CanvasView extends View {
 	private Paint mPaint;
 	private Bitmap mBitmap;
 	private static final int TRACE_COLOR = 0xFFf624c8;
-
+	private boolean mDrawBg = true;
+	
 	public CanvasView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
@@ -108,6 +109,15 @@ public class CanvasView extends View {
 		mPaint.setColor(color);
 	}
 	
+	public void setBgVisible(boolean visible) {
+		mDrawBg = visible;
+		//clearBitmap(getWidth(), getHeight());
+		final int alpha = visible ? 255 : 0;
+		getBackground().setAlpha(alpha);
+		invalidate();
+	}
 	
-
+	public boolean getBgVisibility() {
+		return mDrawBg;
+	}
 }
