@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Cap;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -111,10 +112,13 @@ public class CanvasView extends View {
 	
 	public void setBgVisible(boolean visible) {
 		mDrawBg = visible;
-		//clearBitmap(getWidth(), getHeight());
+		final Drawable bg = getBackground();
 		final int alpha = visible ? 255 : 0;
-		getBackground().setAlpha(alpha);
-		invalidate();
+		if (null != bg) {
+			bg.setAlpha(alpha);
+			invalidate();
+		}
+		
 	}
 	
 	public boolean getBgVisibility() {
