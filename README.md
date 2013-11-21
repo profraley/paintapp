@@ -1,0 +1,3 @@
+An on going in class and homework assignment for CSE 3345.
+
+Allows users to paint on the screen, clear the paint, erase paint, and set brush stroke size. The application also downloads json from internet and parses the json to find images which it will display the user. The user is capable of hiding and showing the caricature along with switching between different characters. The link for the JSON is found @ http://lyle.smu.edu/~craley/3345/docs/caricatures.json.
