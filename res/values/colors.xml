@@ -29,4 +29,6 @@
         <item>#FF996633</item>
         <item>#FF33CCCC</item>
     </array>
+    
+    <color name="progressBgColor">#99000000</color>
 </resources>

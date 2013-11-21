@@ -8,6 +8,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Cap;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Xfermode;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -19,6 +22,10 @@ public class CanvasView extends View {
 	private Bitmap mBitmap;
 	private static final int TRACE_COLOR = 0xFFf624c8;
 	private boolean mDrawBg = true;
+	private boolean mEraserOn = false;
+	private Xfermode mEraseXfermode = new PorterDuffXfermode(PorterDuff.Mode.DST_OUT);
+	private float mStrokeWidthOriginal;
+	private float mStrokeWidth;
 	
 	public CanvasView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
@@ -33,6 +40,8 @@ public class CanvasView extends View {
 		mPaint.setDither(true);
 		mPaint.setStrokeWidth(5);
 		mPaint.setStrokeCap(Cap.ROUND);
+		mPaint.setStrokeJoin(Paint.Join.ROUND);
+		mStrokeWidth = mStrokeWidthOriginal = mPaint.getStrokeWidth();
 	}
 	
 	/**
@@ -82,6 +91,10 @@ public class CanvasView extends View {
 		Canvas can = new Canvas(mBitmap);
 		final int color = mPaint.getColor();
 
+		if (mEraserOn) {
+			mPaint.setXfermode(mEraseXfermode);
+		}
+		
 		for (int i = 0; i < mSavedPoints.size() - 1; i++) {
 			Point p1 = mSavedPoints.get(i);
 			Point p2 = mSavedPoints.get(i+1);
@@ -91,6 +104,7 @@ public class CanvasView extends View {
 		mSavedPoints.clear();
 		canvas.drawBitmap(mBitmap, 0, 0, mPaint);
 		
+		mPaint.setXfermode(null);
 		mPaint.setColor(TRACE_COLOR);
 		
 		for (int i = 0; i < mRecordPoints.size() - 1; i++) {
@@ -123,5 +137,32 @@ public class CanvasView extends View {
 	
 	public boolean getBgVisibility() {
 		return mDrawBg;
+	}
+	
+	
+	/**
+	 * When this mode is turned on, the brush acts like an eraser and will erase any points
+	 * previously recorded.
+	 * @param isEraseModeOn
+	 */
+	public void setEraseModeOn(boolean isEraseModeOn) {
+		mEraserOn = isEraseModeOn;
+	}
+	
+	/**
+	 * 
+	 * @param size Acceptable values are 1-5
+	 */
+	public void setBrushStrokeSize(int size) {
+		final int min = 1;
+		final int max = 5;
+		if (size < min) {
+			size = min;
+		} else if (size > max) {
+			size = max;
+		}
+		
+		mStrokeWidth = mStrokeWidthOriginal * size;
+		mPaint.setStrokeWidth(mStrokeWidth);
 	}
 }

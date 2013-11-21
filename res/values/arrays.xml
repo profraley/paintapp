@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="brushSizesDrawables">
+        <item>@drawable/tiny</item>
+        <item>@drawable/small</item>
+        <item>@drawable/medium</item>
+        <item>@drawable/large</item>
+        <item>@drawable/huge</item>
+    </array>
+</resources>

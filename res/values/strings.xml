@@ -35,5 +35,13 @@
         <item>Cleveland Brown</item>
         <item>Blue Green</item>
     </string-array>
+    
+    <string-array name="brushSizesText">
+        <item>1x</item>
+        <item>2x</item>
+        <item>3x</item>
+        <item>4x</item>
+        <item>5x</item>
+    </string-array>
 
 </resources>
